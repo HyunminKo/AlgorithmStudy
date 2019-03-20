@@ -1,95 +1,104 @@
-package DFS;
+package BFS;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class N_10026 {
 	static int dot[][] = { { -1, 0 }, { 0, -1 }, { 1, 0 }, { 0, 1 } }; // 상하좌우
 	static boolean check[][];
 	static boolean abnormal = false;
+	static Queue<Integer> xqueue;
+	static Queue<Integer> yqueue;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		xqueue = new LinkedList<Integer>();
+		yqueue = new LinkedList<Integer>();
 		int normal_count = 0;
 		int abnormal_count = 0;
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
-		String[][] arr = new String[N][N];
+		String[][] normal_arr = new String[N][N];
+		String[][] abnormal_arr = new String[N][N];
 		check = new boolean[N][N];
 		for (int i = 0; i < N; i++) {
 			String temp = sc.next();
 			for (int j = 0; j < temp.length(); j++) {
-				arr[i][j] = String.valueOf(temp.charAt(j));
+				String x = String.valueOf(temp.charAt(j));
+				normal_arr[i][j] = x;
+				if (x.equals("R") || x.equals("G")) {
+					abnormal_arr[i][j] = "R";
+				} else {
+					abnormal_arr[i][j] = x;
+				}
+
 			}
-		}
+		} // 정상, 비정상 행렬채우기
 
 		for (int i = 0; i < check.length; i++) {
 			for (int j = 0; j < check.length; j++) {
-				if (check[i][j] == false) {
-					normal_count++;
+				if (!check[i][j]) {
 					check[i][j] = true;
-					dfs(i, j, arr);
+					xqueue.add(i);
+					yqueue.add(j);
+					normal_bfs(normal_arr);
+					normal_count++;
 				}
 			}
 		}
-
 		check = new boolean[N][N];
 		for (int i = 0; i < check.length; i++) {
 			for (int j = 0; j < check.length; j++) {
-				if (check[i][j] == false) {
-					if (arr[i][j].equals("R") || arr[i][j].equals("G")) {
-						abnormal = true;
-					}
-					abnormal_count++;
+				if (!check[i][j]) {
 					check[i][j] = true;
-					abnormal_dfs(i, j, arr);
-					abnormal = false;
+					xqueue.add(i);
+					yqueue.add(j);
+					abnormal_bfs(abnormal_arr);
+					abnormal_count++;
 				}
 			}
 		}
-
-		System.out.println(normal_count + " " + abnormal_count);
+		
+		System.out.println(normal_count + " "+ abnormal_count);
 	}
 
-	public static void dfs(int i, int j, String[][] arr) { // 정상인 경우
-		for (int a = 0; a < dot.length; a++) {
-			int dotx = i + dot[a][0];
-			int doty = j + dot[a][1];
+	public static void normal_bfs(String[][] normal_arr) {
+		while (!xqueue.isEmpty() && !yqueue.isEmpty()) {
+			int xfront = xqueue.poll();
+			int yfront = yqueue.poll();
+			for (int a = 0; a < dot.length; a++) {
+					int xdot = dot[a][0] + xfront;
+					int ydot = dot[a][1] + yfront;
 
-			// 범위 벗어나는 것 제거
-			if (dotx < 0 || dotx >= check.length || doty < 0 || doty >= check.length)
-				continue;
+					if (xdot < 0 || ydot < 0 || xdot >= normal_arr.length || ydot >= normal_arr.length)
+						continue;
 
-			if (check[dotx][doty] == false && arr[dotx][doty].equals(arr[i][j])) {
-				// 아직 방문하지 않았으면서 색깔이 같으면 계속 파고들기
-				check[dotx][doty] = true;
-				dfs(dotx, doty, arr);
-			}
-
+					if (!check[xdot][ydot] && normal_arr[xdot][ydot].equals(normal_arr[xfront][yfront])) {
+						xqueue.add(xdot);
+						yqueue.add(ydot);
+						check[xdot][ydot] = true; // 방문햇으니 체크
+					}
+				}
 		}
 	}
+	
+	public static void abnormal_bfs(String[][] abnormal_arr) {
+		while (!xqueue.isEmpty() && !yqueue.isEmpty()) {
+			int xfront = xqueue.poll();
+			int yfront = yqueue.poll();
+			for (int a = 0; a < dot.length; a++) {
+					int xdot = dot[a][0] + xfront;
+					int ydot = dot[a][1] + yfront;
 
-	public static void abnormal_dfs(int i, int j, String[][] arr) { // 비정상인 경우
-		for (int a = 0; a < dot.length; a++) {
-			int dotx = i + dot[a][0];
-			int doty = j + dot[a][1];
-
-			// 범위 벗어나는 것 제거
-			if (dotx < 0 || dotx >= check.length || doty < 0 || doty >= check.length)
-				continue;
-
-			if (abnormal) {
-				if (check[dotx][doty] == false && (arr[dotx][doty].equals("R") || arr[dotx][doty].equals("G"))) {
-					// 아직 방문하지 않았으면서 색깔이 같으면 계속 파고들기
-					check[dotx][doty] = true;
-					abnormal_dfs(dotx, doty, arr);
+					if (xdot < 0 || ydot < 0 || xdot >= abnormal_arr.length || ydot >= abnormal_arr.length)
+						continue;
+					if (!check[xdot][ydot] && abnormal_arr[xdot][ydot].equals(abnormal_arr[xfront][yfront])) {
+						xqueue.add(xdot);
+						yqueue.add(ydot);
+						check[xdot][ydot] = true; // 방문햇으니 체크
+					}
 				}
-			} else {
-				if (check[dotx][doty] == false && arr[dotx][doty].equals(arr[i][j])) {
-					// 아직 방문하지 않았으면서 색깔이 같으면 계속 파고들기
-					check[dotx][doty] = true;
-					abnormal_dfs(dotx, doty, arr);
-				}
-			}
 		}
 	}
 }
