@@ -57,15 +57,21 @@ public class 통나무옮기기_bfs_1938 {
         q.add(pointer);
         visited[pointer.x][pointer.y][pointer.dir] = true;
         while(!q.isEmpty()){
-            Point p = q.poll();
-            if(map[p.x][p.y] == 2){
-                if(p.x == target.x && p.y == target.y && p.dir == target.dir){
-                    flag = true;
-                    break;
+            int size = q.size();
+            for(int i = 0 ; i < size; i++){
+                Point p = q.poll();
+                if(map[p.x][p.y] == 2){
+                    if(p.x == target.x && p.y == target.y && p.dir == target.dir){
+                        flag = true;
+                        break;
+                    }
                 }
+                move(p,q);
+                turn(p,q);
             }
-            move(p,q);
-            turn(p,q);
+            if(flag){
+                break;
+            }
             result++;
         }
         if(flag){
