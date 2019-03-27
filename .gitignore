@@ -177,5 +177,5 @@ Temporary Items
 .apdisk
 
 # hm
-hm/.idea
+hm/.idea/*
 hm/java.iml
