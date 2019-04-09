@@ -30,6 +30,7 @@ public class 벽돌깨기 {
         if(count >= size){
             calc(map);
             System.out.println(index);
+            printMap(map);
             return;
         }
         int[][] backup = new int[N][M];
