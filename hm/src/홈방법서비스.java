@@ -20,18 +20,10 @@ public class 홈방법서비스 {
                     if(map[i][j] == 1) numOfHouse++;
                 }
             }
-            int totalProfit = numOfHouse * M;
-            int maxK = 0;
-            for(int k = 1; k <= 46; k++){
-                int temp = k*k + (k-1)*(k-1);
-                if(temp > totalProfit){
-                    maxK = k-1;
-                    break;
-                }
-            }
+
             for(int i = 0 ; i < N; i++){
                 for(int j = 0 ; j < N; j++){
-                    go(i,j,maxK);
+                    go(i,j,N+1);
                 }
             }
             System.out.println(String.format("#%d %d",test_case,result));

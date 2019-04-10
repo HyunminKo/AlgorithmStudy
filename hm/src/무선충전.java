@@ -53,24 +53,34 @@ public class 무선충전 {
 		bcOfB = scanBC(B,stations);
 		if(bcOfA.size() == 0){
 			if(bcOfB.size() != 0){
-				int index = getMaxIndex(stations, bcOfB);
-				BC bcB = stations.get(index);
-				bcB.numOfUser++;
-				count += bcB.performance / bcB.numOfUser;
-				bcB.numOfUser--;
+				int max = 0;
+				for(int i = 0 ; i < bcOfB.size(); i++){
+					BC bc = stations.get(bcOfB.get(i));
+					int temp = bc.performance / (bc.numOfUser + 1);
+					if(temp > max) {
+						max = temp;
+					}
+				}
+				count += max;
 			}
 		}
 		else if(bcOfA.size() == 1){
 			BC bcA = stations.get(bcOfA.get(0));
 			bcA.numOfUser++;
-			if(bcOfB.size()!= 0){
-				int index = getMaxIndex(stations, bcOfB);
-				BC bcB = stations.get(index);
-				bcB.numOfUser++;
-				count += bcB.performance / bcB.numOfUser;
-				count += bcA.performance / bcA.numOfUser;
-				bcB.numOfUser--;
-			}else {
+			if(bcOfB.size() != 0){
+				int max = 0;
+				for(int i = 0 ; i < bcOfB.size(); i++){
+					BC bc = stations.get(bcOfB.get(i));
+					bc.numOfUser++;
+					int temp = bc.performance / bc.numOfUser;
+					temp += bcA.performance / bcA.numOfUser;
+					bc.numOfUser--;
+					if(temp > max) {
+						max = temp;
+					}
+				}
+				count += max;
+			} else {
 				count += bcA.performance / bcA.numOfUser;
 			}
 			bcA.numOfUser--; //초기화
