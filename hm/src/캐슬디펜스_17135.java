@@ -1,9 +1,9 @@
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.Set;
+		import java.util.HashSet;
+		import java.util.LinkedList;
+		import java.util.Queue;
+		import java.util.Scanner;
+		import java.util.Set;
 
 public class 캐슬디펜스_17135 {
 	static int N,M,D,result = 0;
@@ -38,7 +38,7 @@ public class 캐슬디펜스_17135 {
 		copyAToB(map,backup);
 		int count = 0;
 		int size = N;
-		while(size-- > 0) {			
+		while(size-- > 0) {
 			Set<String> hashSet = new HashSet<>();
 			for(Point h : hunter) {
 				if(map[h.x][h.y]==1) {
@@ -66,16 +66,23 @@ public class 캐슬디펜스_17135 {
 						q.offer(new Point(nx,ny));
 					}
 				}
-				if(candidate.size() != 0) {					
-					candidate.sort((p1,p2)->{
-						int dis = Math.abs(p1.x-h.x)+Math.abs(p1.y-h.y) - Math.abs(p2.x-h.x)+Math.abs(p2.y-h.y);
-						if(dis == 0) {
-							dis = p1.y - p2.y;
+				int tempX=0x3f3f3f3f, tempY=0x3f3f3f3f, tempDis = 0x3f3f3f3f;
+				for(int i = 0 ; i < candidate.size(); i++){
+					Point p = candidate.get(i);
+					int dis = Math.abs(h.x - p.x) + Math.abs(h.y - p.y);
+					if(dis < tempDis){
+						tempDis = dis;
+						tempX = p.x;
+						tempY = p.y;
+					}else if(dis == tempDis){
+						if(p.y < tempY){
+							tempX = p.x;
+							tempY = p.y;
 						}
-						return dis;
-					});
-					Point p = candidate.get(0);
-					hashSet.add(p.x+" "+p.y);
+					}
+				}
+				if(candidate.size() != 0){
+					hashSet.add(tempX+" "+tempY);
 				}
 			}
 			count += hashSet.size();
@@ -86,11 +93,6 @@ public class 캐슬디펜스_17135 {
 			down(map);
 		}
 		copyAToB(backup,map);
-		StringBuilder sb = new StringBuilder();
-		for(Point p : hunter){
-			sb.append(p.y + " ");
-		}
-		System.out.println(sb.toString());
 		result = Math.max(result, count);
 	}
 	private static void down(int[][] map) {
@@ -98,7 +100,7 @@ public class 캐슬디펜스_17135 {
 			for(int j = 0 ; j < M; j++) {
 				if(i == 0) {
 					map[i][j] = 0;
-				}else {					
+				}else {
 					map[i][j] = map[i-1][j];
 				}
 			}
@@ -131,19 +133,6 @@ public class 캐슬디펜스_17135 {
 		public String toString() {
 			return "Point [x=" + x + ", y=" + y + "]";
 		}
-		
+
 	}
 }
-//5 15 3
-//0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-//0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-//0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-//0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-//1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-
-//5 4 3
-//0 0 0 0
-//0 0 0 0
-//0 0 0 0
-//0 0 1 0
-//1 0 0 1
