@@ -16,7 +16,7 @@ public class 줄기세포배양 {
         int T = sc.nextInt();
         for(int test_case = 1 ; test_case <= T ; test_case++){
             N = sc.nextInt(); M = sc.nextInt(); K = sc.nextInt();
-            fixedSize = Math.max(N,K) + K;
+            fixedSize = 2 * Math.max(N,M) + K;
             map = new int[fixedSize][fixedSize];
             statusMap = new int[fixedSize][fixedSize];
             time = new int[fixedSize][fixedSize];
