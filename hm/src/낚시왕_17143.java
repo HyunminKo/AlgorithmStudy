@@ -18,7 +18,7 @@ public class 낚시왕_17143 {
     private static void go(List<Shark> sharks) {
         for(int i = 0 ; i < M; i++){
             catchShark(sharks,i);
-            moveAndEatSharks(sharks);
+            sharks = moveAndEatSharks(sharks);
         }
     }
     private static void catchShark(List<Shark> sharks, int col) {
@@ -32,12 +32,9 @@ public class 낚시왕_17143 {
         });
     }
 
-    private static void moveAndEatSharks(List<Shark> sharks) {
+    private static List<Shark> moveAndEatSharks(List<Shark> sharks) {
         Map<String, Shark> map = new HashMap<>();
-        Iterator<Shark> iter = sharks.iterator();
-        List<Shark> removeList = new ArrayList<>();
-        while(iter.hasNext()){
-            Shark shark = iter.next();
+        for(Shark shark : sharks){
             int numOfMove = shark.speed;
             for(int i = 0 ; i < numOfMove; i++){
                 moving(shark);
@@ -45,17 +42,14 @@ public class 낚시왕_17143 {
             String key = shark.x + "," + shark.y;
             if(map.containsKey(key)){
                 Shark tempShark = map.get(key);
-                if(tempShark.level > shark.level){
-                    iter.remove();
-                }else {
+                if(tempShark.level < shark.level){
                     map.put(key,shark);
-                    removeList.add(tempShark);
                 }
-            } else {
+            }else {
                 map.put(key,shark);
             }
         }
-        sharks.removeAll(removeList);
+        return new ArrayList<>(map.values());
     }
 
     private static void moving(Shark shark) {
