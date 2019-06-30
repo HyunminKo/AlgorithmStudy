@@ -66,10 +66,8 @@ public class Lab3 {
             for(int i = idx; i< virusList.size();i++){
                 Virus v = virusList.get(i);
                 selectVirusList.add(v);
-                visited[v.x][v.y] = true;
                 dfs(cnt+1, i+1, map, emptyPlace, visited);
                 selectVirusList.remove(v);
-                visited[v.x][v.y] = false;
             }
         }
     }
@@ -90,6 +88,7 @@ public class Lab3 {
         Queue<Virus> q = new LinkedList<>();
         for(Virus v : selectVirusList){
             q.add(v);
+            visited[v.x][v.y] = true;
         }
 
         int cycle = q.size();
