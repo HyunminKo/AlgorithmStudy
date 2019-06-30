@@ -23,7 +23,7 @@ public class Lab3 {
         M = input.nextInt();
 
         int[][] map = new int[N][N];
-        boolean[][] visited = new boolean[N][N];
+
         int emptyPlace = 0;
 
         for(int i = 0; i < N; i++){
@@ -44,7 +44,7 @@ public class Lab3 {
             }
         }//setting 0 : 빈칸, 1 : 벽, 2 : 바이러스
 
-        dfs(0, 0, map, emptyPlace, visited);
+        dfs(0, 0, map, emptyPlace);
         if(check == false){
             System.out.println(-1);
         }
@@ -54,37 +54,36 @@ public class Lab3 {
 
     }
 
-    static public void dfs(int cnt, int idx, int[][] map, int emptyPlace, boolean[][] visited){
+    static public void dfs(int cnt, int idx, int[][] map, int emptyPlace){
         if(cnt == M){
             int[][] _map = new int[N][N];
             int _emptyPlace = emptyPlace;
-            boolean[][] _visited = new boolean[N][N];
-            init(_map,_visited,map,visited);
-            bfs(_map,_emptyPlace,_visited);
+            init(_map,map);
+            bfs(_map,_emptyPlace);
         }
         else{
             for(int i = idx; i< virusList.size();i++){
                 Virus v = virusList.get(i);
                 selectVirusList.add(v);
-                dfs(cnt+1, i+1, map, emptyPlace, visited);
+                dfs(cnt+1, i+1, map, emptyPlace);
                 selectVirusList.remove(v);
             }
         }
     }
 
-    private static void init(int[][] map, boolean[][] visited, int[][] map1, boolean[][] visited1) {
+    private static void init(int[][] map, int[][] map1) {
+
 
         for(int i = 0;i < N; i++){
             for(int j = 0; j< N; j++){
                 map[i][j] = map1[i][j];
-                visited[i][j] = visited1[i][j];
             }
         }
-
     }
 
-    static public void bfs(int[][] map, int emptyPlace, boolean[][] visited){
+    static public void bfs(int[][] map, int emptyPlace){
 
+        boolean[][] visited = new boolean[N][N];
         Queue<Virus> q = new LinkedList<>();
         for(Virus v : selectVirusList){
             q.add(v);
