@@ -28,9 +28,9 @@ public class N_17140 {
 				break;
 			}
 			list = new ArrayList<String>();
-			if(arr.length >= arr[0].length) { // Çà Á¤·Ä
+			if(arr.length >= arr[0].length) { // í–‰ ì •ë ¬
 				getRCount();
-			}else { // ¿­Á¤·Ä
+			}else { // ì—´ ì •ë ¬
 				getCCount();
 			}
 			time++;
