@@ -6,7 +6,7 @@ public class Airstrip {
 		// TODO Auto-generated method stub
 		Scanner scan = new Scanner(System.in);
 		int T = scan.nextInt();// 테스트 케이스 개수
-		int tNum = 1;
+		int tNum = 1;        
 		while (tNum <= T) {
 			int tAnswer = 0;
 			int N = scan.nextInt();// 지도 한 변의 크기
