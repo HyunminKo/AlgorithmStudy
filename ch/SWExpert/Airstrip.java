@@ -4,6 +4,7 @@ public class Airstrip {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		// 입력 영역
 		Scanner scan = new Scanner(System.in);
 		int T = scan.nextInt();// 테스트 케이스 개수
 		int tNum = 1;
@@ -17,6 +18,7 @@ public class Airstrip {
 				for (int j = 0; j < N; j++) {
 					map[i][j] = scan.nextInt();
 				}
+			// 알고리즘 영역
 			// 가로 탐색
 			for (int i = 0; i < N; i++) {
 				boolean[] check = new boolean[N];
@@ -114,7 +116,7 @@ public class Airstrip {
 					tAnswer++;
 				}
 			}
-
+			// 출력 영역
 			System.out.println("#" + tNum + " " + tAnswer);
 			tNum++;
 		}
