@@ -56,7 +56,7 @@ public class N_2115 {
 			for(int i=0;i<temp.length;i++) {
 				cost = cost + Integer.parseInt(temp[i]) * Integer.parseInt(temp[i]); 
 			}
-			max_cost = Math.max(cost, max_cost);
+			max_cost = Math.max(cost, max_cost); // 비용 가장 큰거 구하기
 		}
 		
 		for(int k = index;k<arr.length;k++) {
