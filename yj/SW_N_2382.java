@@ -2,6 +2,7 @@ package SWExpertAcademy;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -37,13 +38,13 @@ public class N_2382 {
 			for(Thing t : queue) {
 				sum += t.num;
 			}
-			
+
 			System.out.println("#" + test_case + " " + sum);
 		}
 	}
 	
 	public static void moveThing() {
-		Queue<Thing> temp_queue = new LinkedList<Thing>();
+		PriorityQueue<Thing> temp_queue = new PriorityQueue<>();
 		while(!queue.isEmpty()) {
 			Thing t = queue.poll();
 
@@ -67,48 +68,31 @@ public class N_2382 {
 				else t.dir = 3;
 			}
 			
-			if(t.num != 0) { // 수가 0이면 군집 제거
+			if(t.num > 0) { // 수가 0이면 군집 제거
 				temp_queue.add(t); // 움직인 생물 넣기
 			}
 		}
 		queue = grouping(temp_queue);
 	}
 	
-	// 합칠 때 제일 큰거 방향으로 해주는 부분을 수정해주어야 함
 	public static LinkedList<Thing> grouping(Queue<Thing> temp_queue){
 		HashMap<String,Thing> hm = new HashMap<>();
-		HashMap<Integer,Thing> temp_hm = new HashMap<>();
 		
-		for(Thing t1: temp_queue) {
+		while(!temp_queue.isEmpty()) { // 같은 위치에 있는거 합치기
+			Thing t1 = temp_queue.poll();
 			String key1 = t1.x+","+t1.y;
-			hm.put(key1, t1);
-			for(Thing t2:temp_queue) {
-				String key2 = t2.x+","+t2.y;
-				if(hm.containsKey(key2)) {
-					Thing choose = hm.get(key2);
-					temp_hm.put(choose.num, choose);
-				}
+			if(hm.containsKey(key1)) {
+				Thing th = hm.get(key1);
+				th.num = th.num + t1.num;
+				hm.put(key1,th);
+			}else{
+				hm.put(key1,t1);				
 			}
-			
-			
-		}
-		
-		for(Thing t : temp_queue) {
-			
-			String key = t.x+","+t.y;
-			if(hm.containsKey(key)) { // 이미 있으면
-				Thing temp = hm.get(key); // 꺼내
-				if(temp.num > t.num) { // temp가 수가 많으면 dir은 temp껄로
-					t.dir = temp.dir;
-				}
-				t.num = temp.num + t.num;
-			}
-			hm.put(key,t); // 맵에 넣기
 		}
 		return new LinkedList<>(hm.values());
 	}
 	
-	static public class Thing{ // (상: 1, 하: 2, 좌: 3, 우: 4)
+	static public class Thing implements Comparable<Thing>{ // (상: 1, 하: 2, 좌: 3, 우: 4)
 		int x,y,num,dir;
 		
 		public Thing(int x,int y,int num,int dir) {
@@ -116,6 +100,17 @@ public class N_2382 {
 			this.y = y;
 			this.num = num;
 			this.dir = dir;
+		}
+
+		@Override
+		public int compareTo(Thing t) {
+			// TODO Auto-generated method stub
+			if(this.num > t.num) {
+				return -1;
+			}else if(this.num < t.num) {
+				return 1;
+			}
+			return 0;
 		}
 	}
 }
