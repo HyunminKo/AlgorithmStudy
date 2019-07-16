@@ -16,6 +16,7 @@ public class Pinball {
     static int warmholeCnt = 0;
     static Map<String, String> warmholes = new HashMap<>();
 
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         T = input.nextInt();
@@ -31,7 +32,7 @@ public class Pinball {
                     if(num > 5) warmholeCnt++;
                 }
             }
-            setWarmholes();
+//            setWarmholes();
 
             for(int i = 0; i< N; i++){
                 for(int j = 0; j<N;j++){
@@ -97,17 +98,30 @@ public class Pinball {
                 continue;
             }
 
-            if ((point != 0 && (nr == startRow && nc == startCol)) || map[nr][nc] == -1) {
+            if ((nr == startRow && nc == startCol) || map[nr][nc] == -1) {
 //                System.out.println("도착 : " + nr+"," +nc);
                 break;
             }
 
             if (map[nr][nc] >= 6) {//웜홀
+                /*
+
                 String next = warmholes.get(nr+","+nc);
                 String[] tmp = next.split(",");
                 ball.row = Integer.parseInt(tmp[0]);
                 ball.col = Integer.parseInt(tmp[1]);
 
+                */
+                int warm = map[nr][nc];
+                for(int i = 0; i< N; i++){
+                    for(int j = 0 ; j < N; j++){
+                        if(i == nr && j == nc) continue;
+                        if(map[i][j] == warm){
+                            ball.row = i;
+                            ball.col = j;
+                        }
+                    }
+                }
 
             } else if (map[nr][nc] > 0 && map[nr][nc] < 6) {//블록을 만나면
 //                System.out.println("start : " + startRow + " " + startCol);
@@ -227,6 +241,7 @@ public class Pinball {
         }
     }
 
+    /*
     private static void setWarmholes(){
         boolean[][] visited = new boolean[N][N];
         int cnt = 0;
@@ -267,7 +282,7 @@ public class Pinball {
         }
 
     }
-
+*/
     static class Ball{
         int row, col;
         int dir;//1 : <- , 2: -> , 3: 위쪽으로, 4: 아래쪽으로 (진행방향)
