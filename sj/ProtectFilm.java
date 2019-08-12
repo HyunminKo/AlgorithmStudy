@@ -9,126 +9,121 @@ public class ProtectFilm {
     static int T;
     static int[][] map;
     static int result = Integer.MAX_VALUE;
+    static boolean[] visited;
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         T = input.nextInt();
 
-        while(T > 0){
+        int problem = 1;
+        while (T > 0) {
 
             D = input.nextInt();
             W = input.nextInt();
             K = input.nextInt();
+
             map = new int[D][W];
-            for(int i = 0; i < D;i++ ){
-                for(int j = 0; j<W;j++){
+            visited = new boolean[D];
+            for (int i = 0; i < D; i++) {
+                for (int j = 0; j < W; j++) {
                     int num = input.nextInt();
                     map[i][j] = num;
                 }
             }
 
-            solution();
-            System.out.println(result);
+            dfs(0);
+            System.out.println("#"+problem+ " " +result);
             result = Integer.MAX_VALUE;
+            problem++;
             T--;
         }
     }
 
-    private static void solution() {
+    private static void dfs(int injectCnt) {
 
-        boolean[] visited = new boolean[D];
-
-        if(check()) return ;
-        else {
-            inject_drug_dfs(visited, 0);
+        if(result <= injectCnt) return;
+        if(passCheck()){
+            result = Math.min(result, injectCnt);
+            return;
         }
-    }
-
-    private static void inject_drug_dfs(boolean[] visited, int injectCnt) {
-
-        for(int i = 0; i< D; i++){
+        for (int i = 0; i < D; i++) {
             if(visited[i]) continue;
+            int[] recoveryArray = makeRecoveryArray(i);
+
             visited[i] = true;
-            int[] tempArray = new int[W];
-            for(int j = 0; j< W; j++){
-                tempArray[j] = map[i][j];
-            }
-            inject(i, 0);//약 투여.
-            injectCnt++;
-            inject_drug_dfs(visited, injectCnt);
-            if(check()){
-                result = Math.min(result, injectCnt);
-            }
-            recovery(i, tempArray);
+            inject(i, 0);
+            dfs(injectCnt+1);
 
             inject(i, 1);
-            inject_drug_dfs(visited, injectCnt);
-            if(check()){
-                result = Math.min(result, injectCnt);
-            }
-            recovery(i, tempArray);
-            injectCnt--;
-            visited[i] =false;
+
+            dfs(injectCnt+1);
+            visited[i] = false;
+
+            recovery(i, recoveryArray);
         }
     }
 
-    private static void recovery(int row, int[] tempArray){
-        for(int i = 0; i<W; i++){
-            map[row][i]= tempArray[i];
+    private static void print() {
+
+        for (int i = 0; i < D; i++) {
+            for (int j = 0; j < W; j++) {
+                System.out.print(map[i][j] + " " );
+            }
+            System.out.println();
         }
     }
 
     private static void inject(int row, int drug){
-        for(int i = 0; i< W;i++){
-            map[row][i] = drug;
+        visited[row] = true;
+        for(int i = 0; i < W;i++){
+            if(drug == 0) map[row][i] = 0;
+            else map[row][i] = 1;
         }
     }
 
-
-    private static boolean check(int col){
-        int cnt = 1;
-        int std = map[0][col];
-        for(int i = 1; i<D; i++){
-           if(cnt == 3) return true;
-           if(std == map[i][col]) cnt++;
-           else{
-               std = map[i][col];
-               cnt = 1;
-           }
+    private static void recovery(int row, int[] recoveryArray){
+        for(int i = 0; i< W; i++){
+            map[row][i] = recoveryArray[i];
         }
-        return false;
     }
 
-    private static boolean check(){
+    private static int[] makeRecoveryArray(int row){
+        int[] recoveryArray = new int[W];
 
-        int passCnt = 0;
         for(int i = 0; i < W; i++){
+            recoveryArray[i] = map[row][i];
+        }
+        return recoveryArray;
+    }
 
-            int cnt = 1;
+    private static boolean passCheck(){
+        boolean pass = false;
+        int sameCnt = 1;
+        for (int i = 0; i < W; i++) {
+            pass = false;
+            sameCnt = 1;
             int std = map[0][i];
-            for(int j = 1; j<D; j++){
-                if(cnt == 3) {
-                    passCnt++;
-                    cnt = 1;
-                    break;
+            for (int j = 1; j < D; j++) {
+                if(map[j][i] == std){
+                    sameCnt++;
                 }
-                if(std == map[j][i]) cnt++;
                 else{
                     std = map[j][i];
-                    cnt = 1;
+                    sameCnt = 1;
+                }
+                if(sameCnt == K){
+                    pass = true;
+                    break;
                 }
             }
-            if(cnt == 3){
-                passCnt++;
-                cnt=1;
+            if(!pass){
+                break;
             }
+        }
 
-        }
-        if(passCnt == W) return true;
-        else{
-            return false;
-        }
+        return pass;
     }
+
 }
 //약품의 최소투입 수를 출력.
 //A:0 , B:1
