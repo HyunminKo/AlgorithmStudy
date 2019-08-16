@@ -180,3 +180,10 @@ Temporary Items
 hm/.idea/*
 hm/java.iml
 /.metadata/
+
+# ch
+ch/BeakJoon/.idea/*
+ch/SWExpert/.idea/*
+ch/BeakJoon/.iml
+ch/SWExpert/.iml
+
