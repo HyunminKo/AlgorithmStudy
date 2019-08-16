@@ -3,7 +3,8 @@
 
 # Log file
 *.log
-
+*.xml
+*.iml
 # BlueJ files
 *.ctxt
 
@@ -180,10 +181,3 @@ Temporary Items
 hm/.idea/*
 hm/java.iml
 /.metadata/
-
-# ch
-ch/BeakJoon/.idea/*
-ch/SWExpert/.idea/*
-ch/BeakJoon/BeakJoon.iml
-ch/SWExpert/SWExpert.iml
-
