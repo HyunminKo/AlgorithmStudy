@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="BaekJoon/메모리초과"/>
+	<classpathentry kind="src" path="BaekJoon/DP"/>
+	<classpathentry excluding="BFS/|DFS/|Simulation/" kind="src" path="SWExpert"/>
+	<classpathentry kind="src" path="SWExpert/BFS"/>
+	<classpathentry kind="src" path="SWExpert/DFS"/>
+	<classpathentry kind="src" path="SWExpert/Simulation"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
