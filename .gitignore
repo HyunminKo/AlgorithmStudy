@@ -184,6 +184,6 @@ hm/java.iml
 # ch
 ch/BeakJoon/.idea/*
 ch/SWExpert/.idea/*
-ch/BeakJoon/.iml
-ch/SWExpert/.iml
+ch/BeakJoon/BeakJoon.iml
+ch/SWExpert/SWExpert.iml
 
