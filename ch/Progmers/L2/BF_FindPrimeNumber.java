@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Collections;
 
-public class FindPrimeNumber {
+public class BF_FindPrimeNumber {
     public static void main(String[] args) {
         int a = solution("17");
         System.out.println(a);

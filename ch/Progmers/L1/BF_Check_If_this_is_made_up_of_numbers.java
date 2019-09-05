@@ -1,6 +1,4 @@
-package level1;
-
-public class Check_If_this_is_made_up_of_numbers {
+public class BF_Check_If_this_is_made_up_of_numbers {
     public static void main(String[] args) {
         boolean answer = solution("01234b6789");
         System.out.println(answer);
