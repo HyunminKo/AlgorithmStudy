@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Sort_BiggestNumber {
     public static void main(String[] args) {
-        String a = solution(new int[]{3, 30, 34, 5, 9});
+        String a = solution(new int[]{0,0,0,0,0});
         System.out.println(a);
     }
 
@@ -28,7 +28,8 @@ public class Sort_BiggestNumber {
                 return reverseSum.compareTo(sum);
             }
         });
-
+        if(nums[0].equals("0"))
+            return "0";
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < numbers.length; i++) {
             sb.append(nums[i]);
