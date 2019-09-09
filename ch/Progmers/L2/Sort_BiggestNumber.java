@@ -1,62 +1,42 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class Sort_BiggestNumber implements Comparator<Num> {
+public class Sort_BiggestNumber {
     public static void main(String[] args) {
-        String a = solution(new int[]{6, 10, 2});
+        String a = solution(new int[]{3, 30, 34, 5, 9});
+        System.out.println(a);
     }
 
     public static String solution(int[] numbers) {
 
-        List<Num> numList = new ArrayList<>();
+        String[] nums = new String[numbers.length];
 
         for (int i = 0; i < numbers.length; i++) {
-            numList.add(new Num(numbers[i]));
+            nums[i] = String.valueOf(numbers[i]);
         }
 
-        Sort_BiggestNumber sbn = new Sort_BiggestNumber();
-        Collections.sort(numList, sbn);
+        Arrays.sort(nums, new Comparator<String>() {
+
+            @Override
+            public int compare(String o1, String o2) {
+                if (o1.length() == o2.length()) { // simple case
+                    return o2.compareTo(o1); // order by num desc
+                }
+
+                String sum = o1 + o2;
+                String reverseSum = o2 + o1;
+
+                return reverseSum.compareTo(sum);
+            }
+        });
 
         StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < numbers.length; i++) {
-            sb.append(numList.get(i).getNumber());
+        for (int i = 0; i < numbers.length; i++) {
+            sb.append(nums[i]);
         }
 
         return sb.toString();
     }
 
-    @Override
-    public int compare(Num o1, Num o2) {
-        int num1 = o1.getNumber();
-        int num2 = o2.getNumber();
-        while(num1 != 0){
-            num1=num1%10;
-            o1.setNumber(num1%10);
-        }
 
-        while(num2 != 0){
-            num2=num2%10;
-            o2.setNumber(num2%10);
-        }
-
-        return 0;
-    }
 }
 
-class Num {
-
-    int number;
-
-    public Num(int number) {
-        this.number = number;
-    }
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-}
