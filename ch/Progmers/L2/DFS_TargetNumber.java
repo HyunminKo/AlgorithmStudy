@@ -1,4 +1,4 @@
-public class TargetNumber {
+public class DFS_TargetNumber {
 
     private int answer = 0;
     public int getAnswer() {
@@ -26,7 +26,7 @@ public class TargetNumber {
             arr[i] = 1;
         }
         int target = 3;
-        TargetNumber s = new TargetNumber();
+        DFS_TargetNumber s = new DFS_TargetNumber();
         s.solution(arr,target);
         System.out.println(s.getAnswer());
     }
