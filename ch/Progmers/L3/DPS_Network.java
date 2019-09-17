@@ -1,4 +1,4 @@
-public class Network {
+public class DPS_Network {
     static boolean[][] link;
 
     public static void main(String[] args) {
