@@ -1,5 +1,3 @@
-package 벌꿀채취;
-
 import java.util.Scanner;
 
 public class CollectingHoney {

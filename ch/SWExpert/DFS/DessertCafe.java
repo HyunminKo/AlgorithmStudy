@@ -1,5 +1,3 @@
-package 디저트카페;
-
 import java.util.Scanner;
 
 public class DessertCafe {
